@@ -1,101 +1,84 @@
-# free-mlops-course
+# 🚴‍♂️ ML Bike Demand Prediction (End-to-End MLOps)
 
-[![Powered by Kedro](https://img.shields.io/badge/powered_by-kedro-ffc900?logo=kedro)](https://kedro.org)
+![Python](https://img.shields.io/badge/python-3.12-blue.svg)
+![Kedro](https://img.shields.io/badge/kedro-1.3.1-black.svg)
+![uv](https://img.shields.io/badge/uv-fast_dependency_management-magenta)
+![Docker](https://img.shields.io/badge/docker-containerized-blue)
+![Dash](https://img.shields.io/badge/UI-Dash-008DB8)
 
-## Overview
+An end-to-end Machine Learning project to predict bike rental demand. This project covers the entire ML lifecycle—from data ingestion and processing to model training, evaluation, and serving—all wrapped in a professional and reproducible MLOps pipeline.
 
-This is your new Kedro project, which was generated using `kedro 1.3.1`.
+## 📌 Project Overview
 
-Take a look at the [Kedro documentation](https://docs.kedro.org) to get started.
+This repository demonstrates best practices in MLOps and production-ready machine learning code. It is designed to be highly modular, testable, and reproducible. 
 
-## Rules and guidelines
+The pipeline predicts the number of bikes rented per hour based on weather and calendar information, treating it as a regression problem.
 
-In order to get the best out of the template:
+## 🏗️ Architecture & Tech Stack
 
-* Don't remove any lines from the `.gitignore` file we provide
-* Make sure your results can be reproduced by following a data engineering convention
-* Don't commit data to your repository
-* Don't commit any credentials or your local configuration to your repository. Keep all your credentials and local configuration in `conf/local/`
+*   **Dependency Management**: [uv](https://github.com/astral-sh/uv) for blazing-fast python environment management.
+*   **Orchestration & Data Catalog**: [Kedro](https://kedro.org/) for building robust, scalable, and reproducible data pipelines.
+*   **Machine Learning**: Scikit-Learn & CatBoost for high-performance gradient boosting regression.
+*   **Containerization**: Docker & Docker Compose to ensure consistent environments across local development and production.
+*   **Frontend / UI**: A web-based interactive dashboard built with [Plotly Dash](https://dash.plotly.com/).
+*   **Linting & Formatting**: Ruff for extremely fast Python linting and code formatting.
 
-## How to install dependencies
+## 🚀 Getting Started
 
-Declare any dependencies in `requirements.txt` for `pip` installation.
-
-To install them, run:
-
+### 1. Clone the repository
+```bash
+git clone <your-repo-url>
+cd ml-bike-demand-end-to-end
 ```
-pip install -r requirements.txt
+
+### 2. Environment Setup (using `uv`)
+We use `uv` for modern dependency management because of its unparalleled speed and reliability.
+
+```bash
+# Create a virtual environment
+uv venv
+
+# Activate the environment
+# On Windows:
+.venv\Scripts\activate
+# On Linux/macOS:
+# source .venv/bin/activate
+
+# Install the project and its dependencies
+uv pip install -e .
 ```
 
-## How to run your Kedro pipeline
+## 🏃‍♂️ Running the Pipelines
 
-You can run your Kedro project with:
+Data processing and model training are orchestrated using Kedro.
 
-```
+To execute the entire pipeline (data processing -> feature engineering -> model training -> evaluation):
+```bash
 kedro run
 ```
 
-## How to test your Kedro project
+*Tip: You can also run specific sub-pipelines or nodes using Kedro's standard CLI (e.g., `kedro run --pipeline=data_processing`).*
 
-Have a look at the file `tests/test_run.py` for instructions on how to write your tests. You can run your tests as follows:
+## 🐳 Running with Docker
 
+For a fully isolated and reproducible execution, the project is containerized. 
+
+To build the image and spin up the services (which will train the model and start the Dash UI):
+```bash
+docker-compose up --build
 ```
-pytest
-```
+*Note: Make sure your Docker daemon is running before executing this command.*
 
-You can configure the coverage threshold in your project's `pyproject.toml` file under the `[tool.coverage.report]` section.
+## 📊 Dashboard UI
 
+Once the model is trained and the dashboard service is running (either locally or via Docker), you can interact with the model predictions via the Dash frontend.
 
-## Project dependencies
+Navigate to: `http://localhost:8050` *(or the port defined in your configuration)*.
 
-To see and update the dependency requirements for your project use `requirements.txt`. You can install the project requirements with `pip install -r requirements.txt`.
+---
 
-[Further information about project dependencies](https://docs.kedro.org/en/stable/kedro_project_setup/dependencies.html#project-specific-dependencies)
+## 👏 Acknowledgements
 
-## How to work with Kedro and notebooks
+This project was developed as part of the MLOps Bootcamp by **[Timur Bikmukhametov]**. A huge thanks for the fantastic content, architecture best practices, and guidance!
 
-> Note: Using `kedro jupyter` or `kedro ipython` to run your notebook provides these variables in scope: `context`, 'session', `catalog`, and `pipelines`.
->
-> Jupyter, JupyterLab, and IPython are already included in the project requirements by default, so once you have run `pip install -r requirements.txt` you will not need to take any extra steps before you use them.
-
-### Jupyter
-To use Jupyter notebooks in your Kedro project, you need to install Jupyter:
-
-```
-pip install jupyter
-```
-
-After installing Jupyter, you can start a local notebook server:
-
-```
-kedro jupyter notebook
-```
-
-### JupyterLab
-To use JupyterLab, you need to install it:
-
-```
-pip install jupyterlab
-```
-
-You can also start JupyterLab:
-
-```
-kedro jupyter lab
-```
-
-### IPython
-And if you want to run an IPython session:
-
-```
-kedro ipython
-```
-
-### How to ignore notebook output cells in `git`
-To automatically strip out all output cell contents before committing to `git`, you can use tools like [`nbstripout`](https://github.com/kynan/nbstripout). For example, you can add a hook in `.git/config` with `nbstripout --install`. This will run `nbstripout` before anything is committed to `git`.
-
-> *Note:* Your output cells will be retained locally.
-
-## Package your Kedro project
-
-[Further information about building project documentation and packaging your project](https://docs.kedro.org/en/stable/deploy/package_a_project/#package-an-entire-kedro-project)
+🔗 **His LinkedIn profile:** [https://www.linkedin.com/in/timurbikmukhametov/]

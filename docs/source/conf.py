@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-# free_mlops_course documentation build
+# ml_bike_demand_end_to_end documentation build
 # configuration file, created by sphinx-quickstart.
 #
 # This file is execfile()d with the current directory set to its
@@ -19,11 +19,11 @@
 #
 import re
 
-from free_mlops_course import __version__ as release
+from ml_bike_demand_end_to_end import __version__ as release
 
 # -- Project information -----------------------------------------------------
 
-project = "free_mlops_course"
+project = "ml_bike_demand_end_to_end"
 author = "Kedro"
 
 # The short X.Y version.
@@ -117,7 +117,7 @@ html_show_sourcelink = False
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "free_mlops_coursedoc"
+htmlhelp_basename = "ml_bike_demand_end_to_enddoc"
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -145,8 +145,8 @@ latex_elements = {
 latex_documents = [
     (
         master_doc,
-        "free_mlops_course.tex",
-        "free_mlops_course Documentation",
+        "ml_bike_demand_end_to_end.tex",
+        "ml_bike_demand_end_to_end Documentation",
         "Kedro",
         "manual",
     )
@@ -159,8 +159,8 @@ latex_documents = [
 man_pages = [
     (
         master_doc,
-        "free_mlops_course",
-        "free_mlops_course Documentation",
+        "ml_bike_demand_end_to_end",
+        "ml_bike_demand_end_to_end Documentation",
         [author],
         1,
     )
@@ -174,11 +174,11 @@ man_pages = [
 texinfo_documents = [
     (
         master_doc,
-        "free_mlops_course",
-        "free_mlops_course Documentation",
+        "ml_bike_demand_end_to_end",
+        "ml_bike_demand_end_to_end Documentation",
         author,
-        "free_mlops_course",
-        "Project free_mlops_course codebase.",
+        "ml_bike_demand_end_to_end",
+        "Project ml_bike_demand_end_to_end codebase.",
         "Data-Science",
     )
 ]

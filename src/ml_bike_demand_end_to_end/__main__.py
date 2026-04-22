@@ -1,5 +1,5 @@
-"""free-mlops-course file for ensuring the package is executable
-as `free-mlops-course` and `python -m free_mlops_course`
+"""ml-bike-demand-end-to-end file for ensuring the package is executable
+as `ml-bike-demand-end-to-end` and `python -m ml_bike_demand_end_to_end`
 """
 import sys
 from pathlib import Path
