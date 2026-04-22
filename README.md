@@ -79,6 +79,6 @@ Navigate to: `http://localhost:8050` *(or the port defined in your configuration
 
 ## 👏 Acknowledgements
 
-This project was developed as part of the MLOps Bootcamp by **[Timur Bikmukhametov]**. A huge thanks for the fantastic content, architecture best practices, and guidance!
+This project was developed as part of the MLOps Bootcamp by **Timur Bikmukhametov**. A huge thanks for the fantastic content, architecture best practices, and guidance!
 
-🔗 **His LinkedIn profile:** [https://www.linkedin.com/in/timurbikmukhametov/]
+🔗 **His LinkedIn profile:** [Timur Bikmukhametov](https://www.linkedin.com/in/timurbikmukhametov/)
