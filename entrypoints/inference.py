@@ -11,7 +11,7 @@ from kedro.framework.startup import bootstrap_project
 def run_inference() -> None:
     project_path = Path(__file__).resolve().parent.parent
     bootstrap_project(project_path)
-    configure_project("free_bootcamp_mlacademy")
+    configure_project("ml_bike_demand_end_to_end")
 
     # Load parameters from the configuration file
     params_path = project_path / "conf" / "base" / "parameters.yml"
