@@ -50,3 +50,9 @@ training:
 model_storage:
   path: data/06_models
   name: forecast_model
+
+ui:
+  actual_data_path: data/01_raw/bike_data_inference.parquet
+  predictions_path: data/07_model_output/predictions.parquet
+  update_interval_ms: 2000
+  default_lookback_hours: 24
