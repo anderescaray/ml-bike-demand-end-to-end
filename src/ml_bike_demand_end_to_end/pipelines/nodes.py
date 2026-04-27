@@ -223,3 +223,12 @@ def load_data(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.Timestamp]:
     """Load data and extract last timestamp."""
     last_timestamp = pd.to_datetime(df["datetime"]).iloc[-1]
     return df, last_timestamp
+
+
+def join_timestamps(
+    predictions: pd.DataFrame,
+    timestamps: pd.Timestamp,
+) -> pd.DataFrame:
+    """Join timestamp to predictions."""
+    predictions["datetime"] = timestamps
+    return predictions

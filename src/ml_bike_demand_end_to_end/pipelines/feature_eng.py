@@ -35,7 +35,7 @@ def load_inference_data() -> Pipeline:
         [
             node(
                 func=load_data,
-                inputs="inference_batch",
+                inputs="inference_data",
                 outputs=["input_data", "last_timestamp"],
             ),
         ]
