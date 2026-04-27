@@ -6,3 +6,10 @@
 train_data:
   type: pandas.ParquetDataset
   filepath: data/01_raw/bike_data_train.parquet
+
+# Inference data
+inference_data:
+  type: pandas.ParquetDataset
+  filepath: data/01_raw/bike_data_inference.parquet
+
+

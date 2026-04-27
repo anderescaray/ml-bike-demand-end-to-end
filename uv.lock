@@ -577,81 +577,6 @@ wheels = [
 ]
 
 [[package]]
-name = "free-mlops-course"
-source = { editable = "." }
-dependencies = [
-    { name = "catboost" },
-    { name = "dash" },
-    { name = "dash-bootstrap-components" },
-    { name = "ipython" },
-    { name = "jupyterlab" },
-    { name = "kedro" },
-    { name = "kedro-datasets" },
-    { name = "kedro-viz" },
-    { name = "matplotlib" },
-    { name = "notebook" },
-    { name = "numpy" },
-    { name = "pandas" },
-    { name = "plotly" },
-    { name = "pyarrow" },
-    { name = "pyyaml" },
-    { name = "scikit-learn" },
-]
-
-[package.optional-dependencies]
-dev = [
-    { name = "pytest" },
-    { name = "pytest-cov" },
-    { name = "pytest-mock" },
-    { name = "ruff" },
-]
-docs = [
-    { name = "docutils" },
-    { name = "ipykernel" },
-    { name = "jinja2" },
-    { name = "myst-parser" },
-    { name = "nbsphinx" },
-    { name = "sphinx" },
-    { name = "sphinx-autodoc-typehints" },
-    { name = "sphinx-copybutton" },
-    { name = "sphinx-rtd-theme" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "catboost", specifier = ">=1.2" },
-    { name = "dash", specifier = ">=2.14" },
-    { name = "dash-bootstrap-components", specifier = ">=1.5" },
-    { name = "docutils", marker = "extra == 'docs'", specifier = "<0.21" },
-    { name = "ipykernel", marker = "extra == 'docs'", specifier = ">=5.3,<7.0" },
-    { name = "ipython", specifier = ">=8.10" },
-    { name = "jinja2", marker = "extra == 'docs'", specifier = "<3.2.0" },
-    { name = "jupyterlab", specifier = ">=3.0" },
-    { name = "kedro", specifier = "~=1.1" },
-    { name = "kedro-datasets", specifier = ">=1.0" },
-    { name = "kedro-viz", specifier = ">=12.3.0" },
-    { name = "matplotlib", specifier = ">=3.8" },
-    { name = "myst-parser", marker = "extra == 'docs'", specifier = ">=1.0,<2.1" },
-    { name = "nbsphinx", marker = "extra == 'docs'", specifier = "==0.8.1" },
-    { name = "notebook" },
-    { name = "numpy", specifier = ">=1.24" },
-    { name = "pandas", specifier = ">=2.0" },
-    { name = "plotly", specifier = ">=5.18" },
-    { name = "pyarrow", specifier = ">=14.0" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = "~=7.2" },
-    { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=3,<7" },
-    { name = "pytest-mock", marker = "extra == 'dev'", specifier = ">=1.7.1,<2.0" },
-    { name = "pyyaml", specifier = ">=6.0" },
-    { name = "ruff", marker = "extra == 'dev'", specifier = "~=0.12.0" },
-    { name = "scikit-learn", specifier = ">=1.3" },
-    { name = "sphinx", marker = "extra == 'docs'", specifier = ">=5.3,<7.3" },
-    { name = "sphinx-autodoc-typehints", marker = "extra == 'docs'", specifier = "==1.20.2" },
-    { name = "sphinx-copybutton", marker = "extra == 'docs'", specifier = "==0.5.2" },
-    { name = "sphinx-rtd-theme", marker = "extra == 'docs'", specifier = "==2.0.0" },
-]
-provides-extras = ["docs", "dev"]
-
-[[package]]
 name = "fsspec"
 version = "2026.3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1323,6 +1248,81 @@ sdist = { url = "https://files.pythonhosted.org/packages/9d/55/d01f0c4b45ade6536
 wheels = [
     { url = "https://files.pythonhosted.org/packages/9b/f7/4a5e785ec9fbd65146a27b6b70b6cdc161a66f2024e4b04ac06a67f5578b/mistune-3.2.0-py3-none-any.whl", hash = "sha256:febdc629a3c78616b94393c6580551e0e34cc289987ec6c35ed3f4be42d0eee1", size = 53598, upload-time = "2025-12-23T11:36:33.211Z" },
 ]
+
+[[package]]
+name = "ml-bike-demand-end-to-end"
+source = { editable = "." }
+dependencies = [
+    { name = "catboost" },
+    { name = "dash" },
+    { name = "dash-bootstrap-components" },
+    { name = "ipython" },
+    { name = "jupyterlab" },
+    { name = "kedro" },
+    { name = "kedro-datasets" },
+    { name = "kedro-viz" },
+    { name = "matplotlib" },
+    { name = "notebook" },
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "plotly" },
+    { name = "pyarrow" },
+    { name = "pyyaml" },
+    { name = "scikit-learn" },
+]
+
+[package.optional-dependencies]
+dev = [
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "pytest-mock" },
+    { name = "ruff" },
+]
+docs = [
+    { name = "docutils" },
+    { name = "ipykernel" },
+    { name = "jinja2" },
+    { name = "myst-parser" },
+    { name = "nbsphinx" },
+    { name = "sphinx" },
+    { name = "sphinx-autodoc-typehints" },
+    { name = "sphinx-copybutton" },
+    { name = "sphinx-rtd-theme" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "catboost", specifier = ">=1.2" },
+    { name = "dash", specifier = ">=2.14" },
+    { name = "dash-bootstrap-components", specifier = ">=1.5" },
+    { name = "docutils", marker = "extra == 'docs'", specifier = "<0.21" },
+    { name = "ipykernel", marker = "extra == 'docs'", specifier = ">=5.3,<7.0" },
+    { name = "ipython", specifier = ">=8.10" },
+    { name = "jinja2", marker = "extra == 'docs'", specifier = "<3.2.0" },
+    { name = "jupyterlab", specifier = ">=3.0" },
+    { name = "kedro", specifier = "~=1.1" },
+    { name = "kedro-datasets", specifier = ">=1.0" },
+    { name = "kedro-viz", specifier = ">=12.3.0" },
+    { name = "matplotlib", specifier = ">=3.8" },
+    { name = "myst-parser", marker = "extra == 'docs'", specifier = ">=1.0,<2.1" },
+    { name = "nbsphinx", marker = "extra == 'docs'", specifier = "==0.8.1" },
+    { name = "notebook" },
+    { name = "numpy", specifier = ">=1.24" },
+    { name = "pandas", specifier = ">=2.0" },
+    { name = "plotly", specifier = ">=5.18" },
+    { name = "pyarrow", specifier = ">=14.0" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = "~=7.2" },
+    { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=3,<7" },
+    { name = "pytest-mock", marker = "extra == 'dev'", specifier = ">=1.7.1,<2.0" },
+    { name = "pyyaml", specifier = ">=6.0" },
+    { name = "ruff", marker = "extra == 'dev'", specifier = "~=0.12.0" },
+    { name = "scikit-learn", specifier = ">=1.3" },
+    { name = "sphinx", marker = "extra == 'docs'", specifier = ">=5.3,<7.3" },
+    { name = "sphinx-autodoc-typehints", marker = "extra == 'docs'", specifier = "==1.20.2" },
+    { name = "sphinx-copybutton", marker = "extra == 'docs'", specifier = "==0.5.2" },
+    { name = "sphinx-rtd-theme", marker = "extra == 'docs'", specifier = "==2.0.0" },
+]
+provides-extras = ["docs", "dev"]
 
 [[package]]
 name = "more-itertools"
