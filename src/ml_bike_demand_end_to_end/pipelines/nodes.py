@@ -7,6 +7,7 @@ import numpy as np
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 import joblib
 from pathlib import Path
+import mlflow
 
 def rename_columns(df: pd.DataFrame, renaming_dict: Dict[str, str]) -> pd.DataFrame:
     """Rename columns based on column mapping."""
@@ -101,6 +102,9 @@ def train_model(
     else:
         raise ValueError(f"Unknown model type: {model_type}")
 
+    # Aprovechamos el autologging para registrar parámetros del modelo (y otras métricas automáticas)
+    mlflow.autolog()
+
     # Fit model on training data
     model.fit(x_train, y_train)
     return model
@@ -152,6 +156,10 @@ def compute_metrics(
         'RMSE': float(round(rmse, 2)),
         'MAPE': float(round(mape, 2)),
     }
+    
+    # Registramos las métricas resultantes en MLflow
+    mlflow.log_metrics(metrics)
+
     print(f"Metrics {metrics}")
     return metrics
 

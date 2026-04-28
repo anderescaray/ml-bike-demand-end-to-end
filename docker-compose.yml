@@ -29,3 +29,13 @@ services:
       - ./conf:/app/conf
     depends_on:
       - ml-inference
+
+  # MLFLOW TRACKING DASHBOARD
+  mlflow-ui:
+    build: .
+    command: [ "mlflow", "server", "--host", "0.0.0.0", "--port", "5000", "--backend-store-uri", "file:///app/data/09_tracking" ]
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data:/app/data
+      - ./conf:/app/conf

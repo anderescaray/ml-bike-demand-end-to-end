@@ -24,6 +24,7 @@ dependencies = [
     "plotly>=5.18",
     "matplotlib>=3.8",
     "kedro-viz>=12.3.0",
+    "kedro-mlflow>=2.0.2",
 ]
 
 [project.scripts]
