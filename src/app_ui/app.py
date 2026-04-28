@@ -12,13 +12,19 @@ project_root = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(project_root / "src"))
 os.chdir(project_root)
 
+import requests
+import pandas as pd
 from app_ui.utils import load_data, create_figure
 
 with open(project_root / "conf" / "base" / "parameters.yml") as f:
-    config = yaml.safe_load(f)["ui"]
+    params = yaml.safe_load(f)
+    config = params["ui"]
+    runner_config = params["pipeline_runner"]
 
 ACTUAL_DATA_PATH = project_root / config["actual_data_path"]
-PREDICTIONS_PATH = project_root / config["predictions_path"]
+
+# Global store for predictions history
+predictions_history = pd.DataFrame(columns=["datetime", "prediction"])
 
 # App layout
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -62,13 +68,44 @@ app.layout = dbc.Container([
         Input("interval", "n_intervals")
         ]
     )
-def update_graph(lookback_hours, _):
+def update_graph(lookback_hours, n_intervals):
+    global predictions_history
+    
     df_actual = load_data(ACTUAL_DATA_PATH)
-    df_pred = load_data(PREDICTIONS_PATH)
+    
+    # Simulation: find the batch for the current step (n_intervals)
+    first_timestamp = pd.to_datetime(runner_config["first_timestamp"])
+    first_idx = df_actual[df_actual["datetime"] >= first_timestamp].index[0]
+    
+    current_idx = first_idx + n_intervals
+    batch_size = runner_config["batch_size"]
+    
+    batch_start = max(0, current_idx - batch_size + 1)
+    batch_end = current_idx + 1
+    
+    if batch_end <= len(df_actual):
+        batch = df_actual.iloc[batch_start:batch_end].copy()
+        batch["datetime"] = batch["datetime"].astype(str)
+        
+        try:
+            # Petición HTTP al servicio de inferencia usando requests
+            response = requests.post("http://ml-inference:8000/predict", json=batch.to_dict(orient="records"))
+            if response.status_code == 200:
+                pred_data = response.json()
+                new_preds = pd.DataFrame(pred_data)
+                new_preds["datetime"] = pd.to_datetime(new_preds["datetime"])
+                
+                # Update global history
+                if not new_preds.empty:
+                    predictions_history = pd.concat([predictions_history, new_preds]).drop_duplicates(subset=["datetime"], keep="last")
+        except Exception as e:
+            print(f"Error calling API: {e}")
+
     # Set default lookback hours if not provided
     if not lookback_hours or lookback_hours < 1:
         lookback_hours = config["default_lookback_hours"]
-    figure = create_figure(df_actual, df_pred, lookback_hours)
+        
+    figure = create_figure(df_actual, predictions_history, lookback_hours)
     return figure
 
 server = app.server

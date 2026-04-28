@@ -25,6 +25,9 @@ dependencies = [
     "matplotlib>=3.8",
     "kedro-viz>=12.3.0",
     "kedro-mlflow>=2.0.2",
+    "fastapi>=0.136.0",
+    "uvicorn>=0.45.0",
+    "requests>=2.33.1",
 ]
 
 [project.scripts]

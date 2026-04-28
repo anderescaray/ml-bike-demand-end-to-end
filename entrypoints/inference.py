@@ -1,75 +1,53 @@
-import time
+from contextlib import asynccontextmanager
+from fastapi import FastAPI, Request
 from pathlib import Path
-
-import pandas as pd
 import yaml
-from kedro.framework.project import configure_project
-from kedro.framework.session import KedroSession
-from kedro.framework.startup import bootstrap_project
+import pandas as pd
+import sys
 
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root / "src"))
 
-def run_inference() -> None:
-    project_path = Path(__file__).resolve().parent.parent
-    bootstrap_project(project_path)
-    configure_project("ml_bike_demand_end_to_end")
+from ml_bike_demand_end_to_end.pipelines.nodes import (
+    load_model, predict, join_timestamps, rename_columns, get_features
+)
 
-    # Load parameters from the configuration file
-    params_path = project_path / "conf" / "base" / "parameters.yml"
+model = None
+params = None
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    global model, params
+    params_path = project_root / "conf" / "base" / "parameters.yml"
     with open(params_path) as f:
         params = yaml.safe_load(f)
+        
+    model_type = params["training"]["model_type"]
+    model_storage = params["model_storage"]
+    model_storage["path"] = str(project_root / model_storage["path"])
+    
+    model = load_model(model_type, model_storage)
+    print("Model loaded successfully on startup!")
+    yield
 
-    # Load catalog to get data paths
-    catalog_path = project_path / "conf" / "base" / "catalog.yml"
-    with open(catalog_path) as f:
-        catalog = yaml.safe_load(f)
+app = FastAPI(lifespan=lifespan)
 
-    runner_config = params["pipeline_runner"]
-
-    # Clear predictions file to start fresh
-    predictions_path = project_path / catalog["predictions_with_timestamps"]["filepath"]
-    if predictions_path.exists():
-        predictions_path.unlink()
-        print("Cleared previous predictions")
-
-    # Load inference data from catalog
-    inference_data_path = project_path / catalog["inference_data"]["filepath"]
-    data = pd.read_parquet(inference_data_path)
-    data["datetime"] = pd.to_datetime(data["datetime"])
-    data = data.reset_index(drop=True)
-
-    # Parse config
-    batch_size = runner_config["batch_size"]
-    first_timestamp = pd.to_datetime(runner_config["first_timestamp"])
-    num_steps = runner_config["num_steps_inference"]
-    interval_seconds = runner_config["inference_interval_seconds"]
-
-    # Find first index matching the start timestamp
-    first_idx = data[data["datetime"] >= first_timestamp].index[0]
-
-    print(f"Starting inference: {num_steps} steps, batch_size={batch_size}")
-
-    for step in range(num_steps):
-        current_idx = first_idx + step
-        batch_start = max(0, current_idx - batch_size + 1)
-        batch_end = current_idx + 1
-
-        batch = data.iloc[batch_start:batch_end].copy()
-
-        # Save batch to catalog location
-        batch_path = project_path / catalog["inference_batch"]["filepath"]
-        batch_path.parent.mkdir(parents=True, exist_ok=True)
-        batch.to_parquet(batch_path, index=False)
-
-        # Run pipeline
-        with KedroSession.create(project_path=project_path) as session:
-            session.run(pipeline_name="inference")
-
-        print(f"[{step + 1}/{num_steps}] Prediction saved")
-
-        if step < num_steps - 1:
-            time.sleep(interval_seconds)
-
-    print("Inference loop completed!")
-
-if __name__ == "__main__":
-    run_inference()
+@app.post("/predict")
+async def make_prediction(request: Request):
+    data = await request.json()
+    df = pd.DataFrame(data)
+    
+    # Feature engineering params
+    rename_dict = params["feature_engineering"]["rename_columns"]
+    lag_params = params["feature_engineering"]["lag_params"]
+    
+    # Process batch using the Kedro nodes
+    df_renamed = rename_columns(df, rename_dict)
+    features, timestamps = get_features(df_renamed, lag_params)
+    predictions = predict(model, features)
+    result = join_timestamps(predictions, timestamps)
+    
+    # Convert datetime to string for JSON
+    result["datetime"] = result["datetime"].astype(str)
+    return result.to_dict(orient="records")
