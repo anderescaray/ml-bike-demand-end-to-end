@@ -1599,6 +1599,12 @@ docs = [
     { name = "sphinx-rtd-theme" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "pytest" },
+    { name = "pytest-cov" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "catboost", specifier = ">=1.2" },
@@ -1636,6 +1642,12 @@ requires-dist = [
     { name = "uvicorn", specifier = ">=0.45.0" },
 ]
 provides-extras = ["docs", "dev"]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "pytest", specifier = ">=7.4.4" },
+    { name = "pytest-cov", specifier = ">=6.3.0" },
+]
 
 [[package]]
 name = "mlflow"

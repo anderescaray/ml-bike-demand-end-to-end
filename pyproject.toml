@@ -100,3 +100,9 @@ ignore = ["E501"]  # Ruff format takes care of line-too-long
 
 [tool.kedro_telemetry]
 project_id = "4a21c5ec379d4d23a1dbaa02561f39a7"
+
+[dependency-groups]
+dev = [
+    "pytest>=7.4.4",
+    "pytest-cov>=6.3.0",
+]
